@@ -14,7 +14,7 @@
 
 <style>
 #map {
-height: 500px;
+height: 1000px;
 }
 </style>
 </head>
@@ -23,7 +23,7 @@ height: 500px;
 <div id="map"></div>
 
 <script>
-// Create map centered on Manchester
+// Create map centered on Workday 
 var map = L.map('map').setView([53.34785, -6.27576], 13);
 
 // Add map tiles
@@ -33,7 +33,7 @@ attribution: '&copy; OpenStreetMap contributors'
 
 // Add a marker
 L.marker([53.34785, -6.27576]).addTo(map)
-.bindPopup('Dublin')
+.bindPopup('Workday')
 .openPopup();
 </script>
 
