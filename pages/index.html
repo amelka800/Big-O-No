@@ -95,13 +95,15 @@ const path = dijkstra(graph, 1, 11);
 const route = path.map(id => nodes[id]);
 
 // ===== 5️⃣ Draw markers =====
-for (let id in nodes) {
-  L.marker(nodes[id]).bindPopup("Node " + id).addTo(map);
-}
+//for (let id in nodes) {
+ // L.marker(nodes[id]).bindPopup("Node " + id).addTo(map);
+//}
 
 // Accessibility demo markers
-L.marker([53.341, -6.251]).bindPopup("🚫 Stairs - bad accessibility").addTo(map);
-L.marker([53.346, -6.265]).bindPopup("✅ Ramp - good accessibility").addTo(map);
+L.marker([53.34941, -6.27953]).bindPopup("🚫 Stairs - bad accessibility").addTo(map);
+L.marker([53.34896, -6.27838]).bindPopup("✅ Ramp - good accessibility").addTo(map);
+L.marker([53.34873, -6.27815]).bindPopup("🚫 High-Curb - bad accessibility").addTo(map);
+L.marker([53.34841, -6.27645]).bindPopup("✅ Tactile-Paving - good accessibility").addTo(map);
 
 // ===== 6️⃣ Draw red polyline =====
 const poly = L.polyline(route, { color: 'red', weight: 5 }).addTo(map);
