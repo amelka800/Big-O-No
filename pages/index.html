@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Leaflet Test</title>
+<title>AccessiMap</title>
 
 <!-- Leaflet CSS -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<link rel="stylesheet" href="index.css"/>
 
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -14,61 +15,45 @@
 
 <style>
 #map {
-height: 500px;
+width: 100%;
+height: 100vh;
+z-index: 1;
 }
 </style>
 </head>
+
 <body>
 
-<div id="map"></div>
+    <!-- Page content -->
+<div class="main">
+  <div id="map"></div>
+</div>
+
+<!-- Side navigation -->
+<div class="sidenav">
+
+  <a href="#">About</a>
+  <a href="#">Services</a>
+  <a href="#">Clients</a>
+  <a href="#">Contact</a>
+</div>
+
+
 
 <script>
+// Create map centered on Workday 
+var map = L.map('map').setView([53.34785, -6.27576], 13);
 
-    // Create map centered on Dublin
-    var map = L.map('map').setView([53.3498, -6.2603], 13);
+// Add map tiles
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
 
-    // Add map tiles
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
-
-    // Add a marker in Dublin city centre
-    L.marker([53.3498, -6.2603]).addTo(map)
-        .bindPopup('Dublin')
-        .openPopup();
-
-    L.marker([53.341, -6.251])
-        .addTo(map)
-        .bindPopup("🚫 Stairs - bad accessibility");
-
-    L.marker([53.346, -6.265])
-        .addTo(map)
-        .bindPopup("✅ Ramp - good accessibility");
-
-<<<<<<< HEAD
-=======
 // Add a marker
 L.marker([53.34785, -6.27576]).addTo(map)
 .bindPopup('Workday')
 .openPopup();
-
-// add marker for stairs 
-L.marker([60, -10]).addTo(map)
-.bindPopup('Stairs')
-.openPopup();
-
->>>>>>> 7311f460bcbdfabdd1218995f53615ea42033a9c
 </script>
-
-<style> 
-    #map{
-        height: 500px;
-    }
-
-    #dest{
-        color:pink;
-    }
-</style>
 
 </body>
 </html>
