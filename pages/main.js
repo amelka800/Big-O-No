@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* This is a test */ 
 
 // Create map centered on Workday
@@ -22,3 +23,19 @@ L.marker([53.341, -6.251])
 L.marker([53.346, -6.265])
   .addTo(map)
   .bindPopup("✅ Ramp - good accessibility");
+=======
+map.on('click', function(e) {
+  console.log(e.latlng); // {lat, lng}
+});
+
+var score = 100;
+
+var obstructions = {
+
+  "wheelchair": {
+    "stairs": 5, 
+    "no_path": 10
+  }
+};
+
+>>>>>>> 7311f460bcbdfabdd1218995f53615ea42033a9c
