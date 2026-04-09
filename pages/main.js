@@ -2,6 +2,7 @@
 
 // Create map centered on Workday
 var map = L.map('map').setView([53.3477872,  -6.2750163], 13);
+var home = L.map('Workday').setView({});
 var dest = L.map('Nail Salon').setView([53.349346, -6.279470], 16);
 
 // Add map tiles
