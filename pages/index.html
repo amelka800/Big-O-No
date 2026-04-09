@@ -9,9 +9,12 @@
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
+<!--  main JS -->
+<script src="main.js"></script>
+
 <style>
 #map {
-height: 500px;
+height: 1000px;
 }
 </style>
 </head>
@@ -20,8 +23,8 @@ height: 500px;
 <div id="map"></div>
 
 <script>
-// Create map centered on Manchester
-var map = L.map('map').setView([53.34785, 6.27576], 13);
+// Create map centered on Workday 
+var map = L.map('map').setView([53.34785, -6.27576], 13);
 
 // Add map tiles
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -29,8 +32,8 @@ attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
 // Add a marker
-L.marker([53.4808, -2.2426]).addTo(map)
-.bindPopup('Manchester')
+L.marker([53.34785, -6.27576]).addTo(map)
+.bindPopup('Workday')
 .openPopup();
 </script>
 
