@@ -1,10 +1,9 @@
-<<<<<<< HEAD
 /* This is a test */ 
 
 // Create map centered on Workday
 var map = L.map('map').setView([53.3477872,  -6.2750163], 13);
-var home = L.map('Workday').setView({});
-var dest = L.map('Nail Salon').setView([53.349346, -6.279470], 16);
+var home = L.latLng(53.3477872, -6.2750163); // Workday
+var dest = L.latLng(53.349346, -6.279470);   // Nail Salon
 
 // Add map tiles
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -23,7 +22,6 @@ L.marker([53.341, -6.251])
 L.marker([53.346, -6.265])
   .addTo(map)
   .bindPopup("✅ Ramp - good accessibility");
-=======
 map.on('click', function(e) {
   console.log(e.latlng); // {lat, lng}
 });
@@ -38,4 +36,3 @@ var obstructions = {
   }
 };
 
->>>>>>> 7311f460bcbdfabdd1218995f53615ea42033a9c
