@@ -30,18 +30,45 @@ z-index: 1;
 
 <body>
 
-    <!-- Page content -->
+<!-- Page content -->
 <div class="main">
   <div id="map"></div>
 </div>
 
 <!-- Side navigation -->
 <div class="sidenav">
+    <div class="user-section">
+        <span class="username">workday_duck</span>
 
-  <a href="#">About</a>
-  <a href="#">Services</a>
-  <a href="#">Clients</a>
-  <a href="#">Contact</a>
+        <button class="settings-btn" onclick="toggleMenu()">
+          ⚙️
+        </button>
+
+   <div id="dropdownMenu" class="dropdown-menu">
+    <a href="#">Profile</a>
+    <a href="#">Settings</a>
+    <a href="#">Logout</a>
+   </div>
+</div>
+    <br>
+    
+<div class="searchLocation">
+     <form id="myForm">
+    <input type="text" id="startLocation" placeholder="Where from?">
+    <br>
+    <input type="text" id="endLocation" placeholder="Where to?">
+    </form>
+    <br>
+
+    <button onclick="showRoute()">
+        Submit
+    </button>
+
+    <p id="routeText"></p>
+    <br>
+    </div>
+    
+</div>
 </div>
 
 
@@ -173,6 +200,15 @@ L.marker([53.34841, -6.27645]).bindPopup("✅ Tactile-Paving - good accessibilit
 const poly = L.polyline(route, { color: 'red', weight: 5 }).addTo(map);
 map.fitBounds(poly.getBounds());
 
+function toggleMenu() {
+  const menu = document.getElementById("dropdownMenu");
+  menu.style.display = (menu.style.display === "block") ? "none" : "block";
+}
+
+function showRoute() {
+  document.getElementById("routeText").textContent = "Fastest route: \n Our Recommended Route: \n";
+}
+        
 </script>
 </body>
 </html>
