@@ -23,19 +23,39 @@ height: 500px;
 <div id="map"></div>
 
 <script>
-// Create map centered on Manchester
-var map = L.map('map').setView([53.34785, 6.27576], 13);
 
-// Add map tiles
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-attribution: '&copy; OpenStreetMap contributors'
-}).addTo(map);
+    // Create map centered on Dublin
+    var map = L.map('map').setView([53.3498, -6.2603], 13);
 
-// Add a marker
-L.marker([53.4808, -2.2426]).addTo(map)
-.bindPopup('Manchester')
-.openPopup();
+    // Add map tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Add a marker in Dublin city centre
+    L.marker([53.3498, -6.2603]).addTo(map)
+        .bindPopup('Dublin')
+        .openPopup();
+
+    L.marker([53.341, -6.251])
+        .addTo(map)
+        .bindPopup("🚫 Stairs - bad accessibility");
+
+    L.marker([53.346, -6.265])
+        .addTo(map)
+        .bindPopup("✅ Ramp - good accessibility");
+
 </script>
+
+<style> 
+    #map{
+        height: 500px;
+    }
+
+    #dest{
+        color:pink;
+    }
+</style>
 
 </body>
 </html>
