@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Leaflet Test</title>
+<title>AccessiMap Demo</title>
 
 <!-- Leaflet CSS -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
@@ -9,12 +9,10 @@
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-<!--  main JS -->
-<script src="main.js"></script>
-
 <style>
 #map {
-height: 1000px;
+  width: 100%;
+  height: 100vh;
 }
 </style>
 </head>
@@ -23,19 +21,92 @@ height: 1000px;
 <div id="map"></div>
 
 <script>
-// Create map centered on Workday 
-var map = L.map('map').setView([53.34785, -6.27576], 13);
+// ===== 1️⃣ Initialize map =====
+const map = L.map('map').setView([53.34785, -6.27576], 16);
 
-// Add map tiles
+// Add tiles
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-attribution: '&copy; OpenStreetMap contributors'
+  attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
-// Add a marker
-L.marker([53.34785, -6.27576]).addTo(map)
-.bindPopup('Workday')
-.openPopup();
-</script>
+// ===== 2️⃣ Nodes and Graph =====
+const nodes = {
+  1: [53.34802, -6.27585],
+  2: [53.34802, -6.27679],
+  3: [53.34766, -6.27690],
+  4: [53.34862, -6.27795],
+  5: [53.34878, -6.27625],
+  6: [53.34782, -6.27816],
+  7: [53.349, -6.27781],
+  8: [53.34853, -6.27846],
+  9: [53.34895,- 6.27835],
+  10: [53.34863, -6.27979],
+  11: [53.34936, -6.27954]  // same as node 9
+};
 
+const graph = {
+  1: [{ to: 2, weight: 63.0 }],
+  2: [
+    { to: 1, weight: 63.0 },
+    { to: 3, weight: 40.6 },
+    { to: 4, weight: 102.5 },
+    { to: 5, weight: 91.8 }
+  ],
+  3: [{ to: 2, weight: 40.6 }, { to: 6, weight: 86.3 }],
+  4: [{ to: 2, weight: 102.5 }],
+  5: [{ to: 2, weight: 91.8 }, { to: 7, weight: 107.3 }],
+  6: [{ to: 3, weight: 86.3 }, { to: 8, weight: 81.3 }],
+  7: [{ to: 5, weight: 107.3 }, { to: 9, weight: 69.5 }],
+  8: [{ to: 6, weight: 81.3 }, { to: 11, weight: 1000000000 }],
+  9: [{ to: 7, weight: 69.5 }, { to: 10, weight: 87.8 }, { to: 11, weight: 0 }],
+  10: [{ to: 9, weight: 87.8 }, { to: 11, weight: 0 }],
+  11: [{ to: 10, weight: 0 }, { to: 8, weight: 0 }, { to: 9, weight: 0 }]
+};
+
+// ===== 3️⃣ Dijkstra Function =====
+function dijkstra(graph, start, end) {
+  const distances = {}, previous = {}, visited = new Set();
+  for (let n in graph) { distances[n] = Infinity; previous[n] = null; }
+  distances[start] = 0;
+
+  while (true) {
+    let current = null, smallest = Infinity;
+    for (let n in distances) {
+      const nn = Number(n);
+      if (!visited.has(nn) && distances[n] < smallest) { smallest = distances[n]; current = nn; }
+    }
+    if (current === null || current === end) break;
+    visited.add(current);
+    for (let neighbor of graph[current]) {
+      const next = Number(neighbor.to);
+      const alt = distances[current] + neighbor.weight;
+      if (alt < distances[next]) { distances[next] = alt; previous[next] = current; }
+    }
+  }
+
+  const path = [];
+  let current = end;
+  while(current !== null) { path.unshift(current); current = previous[current]; }
+  return path;
+}
+
+// ===== 4️⃣ Compute Route =====
+const path = dijkstra(graph, 1, 11);
+const route = path.map(id => nodes[id]);
+
+// ===== 5️⃣ Draw markers =====
+for (let id in nodes) {
+  L.marker(nodes[id]).bindPopup("Node " + id).addTo(map);
+}
+
+// Accessibility demo markers
+L.marker([53.341, -6.251]).bindPopup("🚫 Stairs - bad accessibility").addTo(map);
+L.marker([53.346, -6.265]).bindPopup("✅ Ramp - good accessibility").addTo(map);
+
+// ===== 6️⃣ Draw red polyline =====
+const poly = L.polyline(route, { color: 'red', weight: 5 }).addTo(map);
+map.fitBounds(poly.getBounds());
+
+</script>
 </body>
 </html>
